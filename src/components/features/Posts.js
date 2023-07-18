@@ -11,8 +11,8 @@ const Posts = () => {
         <section> 
             <Row>  
                 {posts.map(post => (
-                    <Col sm='12' md='4'> 
-                        <Card className='my-2' key={post.id}>
+                    <Col  className='d-flex' sm='12' md='4' lg='4' > 
+                        <Card key={post.id} className='my-2 align-items-stretch' >
                             <Card.Body>
                                 <Card.Title>{post.title}</Card.Title>
                                 <Card.Text>
@@ -23,7 +23,7 @@ const Posts = () => {
                                     <br/>
                                     {post.shortDescription}                                        
                                 </Card.Text>
-                                <Button variant="primary" as={Link} to={`/post/${post.id}`} >Read more</Button>
+                                <Button variant="primary" as={Link} key={post.id} to={`/post/${post.id}`}>Read more</Button>
                             </Card.Body>                                
                         </Card>                    
                     </Col>              
