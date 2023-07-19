@@ -1,4 +1,3 @@
-import shortid from 'shortid';
 //selectors
 export const getAllPosts = ({ posts }) => posts;
 export const getPostById = ({ posts }, id) => posts.find(post => post.id === id);
@@ -17,10 +16,15 @@ const postsReducer = (statePart = [], action) => {
     case REMOVE_POST:
       return statePart.filter(post => (post.id !== action.payload));
     case ADD_POST:
-      return [...statePart, {...action.payload, id: shortid() }];
+      return [...statePart, {...action.payload}];
     default:
       return statePart;
   };
 };
 
 export default postsReducer;
+
+
+
+//w case ADD_POST: cala zawart. ktorej potrzebuje obiekt postu jest juz zdef w dispatch(w handl addPost),
+//tutaj juz tylko sam payload [albo tu albo tam -id: shortid]

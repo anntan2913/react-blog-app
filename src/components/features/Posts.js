@@ -12,7 +12,7 @@ const Posts = () => {
             <Row>  
                 {posts.map(post => (
                     <Col  className='d-flex' sm='12' md='4' lg='4' > 
-                        <Card key={post.id} className='my-2 align-items-stretch' >
+                        <Card key={post.id} className='my-2 align-items-stretch' style={{ width: '100%' }} >
                             <Card.Body>
                                 <Card.Title>{post.title}</Card.Title>
                                 <Card.Text>
@@ -30,6 +30,8 @@ const Posts = () => {
                 ))}
             </Row>           
         </section>
+
+        
     );
 };
 

@@ -17,18 +17,13 @@ const AddPostForm = () => {
     const [content, setContent] = useState('');
     
     const handleAddPost = e => {
-        e.preventDefault();
-        navigate('/');
+        e.preventDefault();        
         dispatch(addPost({ id: shortid.generate(), title, author, publishedDate, shortDescription, content }));
-        setTitle ('');
-        setAuthor('');
-        setPublishedDate('');
-        setShortDescription('');
-        setContent('');       
+        navigate('/');      
     };
 
     return(
-        <form >
+        <form onSubmit={handleAddPost} >
             <div style={{ width: '50%' }}>
                 <Form.Group className="mb-4" >
                     <Form.Label>Title</Form.Label>
@@ -53,7 +48,7 @@ const AddPostForm = () => {
                 <Form.Control as="textarea" rows={9} placeholder="Leave a comment here" value={content} onChange={e => setContent(e.target.value)}  />
                 </Form.Group>                
             </div>
-            <Button variant="primary" type="submit" onClick={handleAddPost} className="mb-4">Add Post</Button>            
+            <Button variant="primary" type="submit" className="mb-4">Add Post</Button>            
         </form>
     );
 };
