@@ -7,7 +7,7 @@ const Post = () => {
 
     const { id } = useParams();
 
-    const postData = useSelector(state => getPostById(state, id));
+    const postData = useSelector(state => getPostById(state, id)); //Pobranie postu o id...
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);

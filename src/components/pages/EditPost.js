@@ -1,6 +1,10 @@
+import EditPostForm from "../features/EditPostForm";
 const EditPost = () => {
     return (
-        <h2>Post Edit</h2>
+        <div className="mx-auto" style={{ maxWidth: "900px" }}>
+        <h2>Edit Post</h2>
+        <EditPostForm/>
+        </div>
     );
 };
 
