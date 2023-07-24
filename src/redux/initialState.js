@@ -7,7 +7,7 @@ const initialState = {
             title: 'Article title',
             shortDescription: 'Short description of the article...',
             content: 'Main content of the article',
-            publishedDate: '16-07-2023',
+            publishedDate: new Date('02-02-2022'),
             author: 'John Doe'
         },
 
@@ -16,7 +16,7 @@ const initialState = {
             title: 'Mount St. Helens',
             shortDescription: 'Short description of the article...',
             content: 'Main content of the article',
-            publishedDate: '16-07-2023',
+            publishedDate: new Date('27-06-2023'),
             author: 'Jane Doe'
         },
 
@@ -25,15 +25,14 @@ const initialState = {
             title: 'Yellowstone Caldera',
             shortDescription: 'Short description of the article...',
             content: 'Main content of the article',
-            publishedDate: '16-07-2023',
-            author: 'Amanda Hughes'
+            publishedDate: new Date('06-07-2023'),
         },
         {
             id: '4',
             title: 'Mount Vesuvius',
             shortDescription: 'Short description of the article...',
             content: 'Main content of the article',
-            publishedDate: '16-07-2023',
+            publishedDate: new Date('16-07-2023'),
             author: 'Plinius Pompei'
         }
      ],

@@ -3,8 +3,10 @@ import { getPostById, removePost } from '../../redux/postsRedux';
 import { Navigate, useParams, Link } from "react-router-dom";
 import { Card, Button, Modal } from "react-bootstrap";
 import { useState } from "react";
-const Post = () => {
+import dateToStr from "../../utils/dateToStr";
 
+const Post = () => {
+    
     const { id } = useParams();
 
     const postData = useSelector(state => getPostById(state, id)); //Pobranie postu o id...
@@ -37,10 +39,10 @@ const Post = () => {
                     <Card.Text>
                     <strong>Author: </strong>{postData.author}
                     <br/>
-                    <strong>Published: </strong>{postData.publishedDate}
+                    <strong>Published: </strong>{dateToStr(postData.publishedDate)}
                     <br/>
                     <br/>
-                    {postData.content}
+                    <p dangerouslySetInnerHTML={{ __html: postData.content }} />
                     </Card.Text>                
                 </Card.Body>
             </Card>         
