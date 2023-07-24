@@ -31,9 +31,12 @@ const PostForm = ({ action, actionText, ...props }) => {
                     <Form.Label>Author</Form.Label>
                     <Form.Control type="text" placeholder="Enter author" value={author} onChange={e => setAuthor(e.target.value)}  />
                 </Form.Group>
-                <Form.Group className="mb-4">
+                <Form.Group className="mb-4" style={{ display: 'block' }}>
+                 
                     <Form.Label>Published</Form.Label>
-                    <DatePicker selected={publishedDate} onChange={date => setPublishedDate(date)}  />
+                    <div style={{ display: 'block' }}>
+                        <DatePicker  selected={publishedDate} onChange={date => setPublishedDate(date)}  />
+                    </div>
                 </Form.Group>
             </div>
             <div style={{ width: '100%' }}>
