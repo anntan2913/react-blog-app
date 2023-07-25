@@ -5,7 +5,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import dateToStr from '../../utils/dateToStr';
+import { useForm } from 'react-hook-form';
 
 const PostForm = ({ action, actionText, ...props }) => {
     
@@ -14,39 +14,64 @@ const PostForm = ({ action, actionText, ...props }) => {
     const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
     const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
     const [content, setContent] = useState(props.content || '');
-        
-    const handleSubmit = e => {
-        e.preventDefault();
-        action({ title, author, publishedDate, shortDescription, content });
-    };
+
+    const [contentError, setContentError] = useState(false); 
+    const [dateError, setDateError] = useState(false);
+    
+    const { register, handleSubmit: validate, formState: { errors } } = useForm();
+    
+
+    const handleSubmit = () => {
+        setContentError(!content)
+        setDateError(!publishedDate)
+        if(content && publishedDate) {
+          action({ title, author, publishedDate, shortDescription, content });
+        }
+      };
     
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={validate(handleSubmit)}>    
             <div style={{ width: '50%' }}>
-                <Form.Group className="mb-4" >
+                <Form.Group className="mb-4">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Enter title" value={title} onChange={e => setTitle(e.target.value)}  />
+                    <Form.Control
+                        {...register("title", { required: true, minLength: 4 })}                       
+                       value={title} onChange={e => setTitle(e.target.value)} 
+                       type="text" placeholder="Enter title"
+                    /> 
+                    {errors.title && <small className="d-block form-text text-danger mt-2">Title is too short (min is 4 characters)</small>}                     
                 </Form.Group>
                 <Form.Group className="mb-4">
                     <Form.Label>Author</Form.Label>
-                    <Form.Control type="text" placeholder="Enter author" value={author} onChange={e => setAuthor(e.target.value)}  />
+                    <Form.Control 
+                        {...register("author", { required: true, minLength: 4 })}                       
+                        value={author} onChange={e => setAuthor(e.target.value)}
+                        type="text" placeholder="Enter author"
+                     /> 
+                    {errors.author && <small className="d-block form-text text-danger mt-2">Author's name is too short (min is 4 characters)</small>}                    
                 </Form.Group>
-                <Form.Group className="mb-4" style={{ display: 'block' }}>
-                 
+                <Form.Group className="mb-4">                 
                     <Form.Label>Published</Form.Label>
                     <div style={{ display: 'block' }}>
-                        <DatePicker  selected={publishedDate} onChange={date => setPublishedDate(date)}  />
+                        <DatePicker  selected={publishedDate} onChange={(date) => setPublishedDate(date)} />
+                        {dateError && <small className="d-block form-text text-danger mt-2">Date field can't be empty</small>}
                     </div>
                 </Form.Group>
             </div>
             <div style={{ width: '100%' }}>
                 <Form.Group className="mb-4">
                 <Form.Label>Short description</Form.Label>
-                <Form.Control as="textarea" rows={3} placeholder="Leave a comment here" value={shortDescription} onChange={e => setShortDescription(e.target.value)}  />                
+                <Form.Control 
+                    {...register("shortDescription", { required: true, minLength: 20 })}                    
+                    value={shortDescription} onChange={e => setShortDescription(e.target.value)}
+                    as="textarea" rows={3} placeholder="Leave a comment here"
+                />
+                {errors.shortDescription && <small className="d-block form-text text-danger mt-2">Your comment is too short (min is 20 characters)</small>}                                
                 </Form.Group>
                 <Form.Group className="mb-4">
-                <Form.Label>Main content</Form.Label>
-                <ReactQuill theme="snow" value={content} onChange={setContent} />
+                    <Form.Label>Main content</Form.Label>
+                    <ReactQuill theme="snow" value={content} onChange={setContent} />
+                    {contentError && <small className="d-block form-text text-danger mt-2">Content can't be empty</small>}
                 </Form.Group>                
             </div>
             <Button variant="primary" type="submit" className="mb-4">{actionText}</Button>
@@ -74,3 +99,8 @@ export default PostForm;
 Tu tworzymy nową osobną funkcję specjalnie do obsługi eventu submit (np. handleSubmit).
 Zajmie się zatrzymaniem zachowania domyślnego, a dopiero później uruchomieniem action z odpowiednimi informacjami.
  */
+
+/*  walidacja formularza: 
+onSubmit={validate(handleSubmit)} czyli w momencie wykrycia eventu submit, zwaliduj formularz i jeśli wszystko
+ jest wypełnione poprawnie, to uruchom funkcję handleSubmit.
+ Nie potrzeba też już e.prev.Def. - przejmuje to validate */
