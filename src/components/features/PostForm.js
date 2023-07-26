@@ -1,22 +1,28 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, FormGroup } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { getAllCategories } from '../../redux/categoriesRedux';
 
 const PostForm = ({ action, actionText, ...props }) => {
+
+    const categories = useSelector(getAllCategories);
     
     const [title, setTitle] = useState (props.title || '');
     const [author, setAuthor] = useState(props.author || '');
     const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
     const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
     const [content, setContent] = useState(props.content || '');
+    const [category, setCategory] = useState(props.category || '');
 
     const [contentError, setContentError] = useState(false); 
     const [dateError, setDateError] = useState(false);
+    
     
     const { register, handleSubmit: validate, formState: { errors } } = useForm();
     
@@ -24,8 +30,8 @@ const PostForm = ({ action, actionText, ...props }) => {
     const handleSubmit = () => {
         setContentError(!content)
         setDateError(!publishedDate)
-        if(content && publishedDate) {
-          action({ title, author, publishedDate, shortDescription, content });
+        if(content && publishedDate && category) {
+          action({ title, author, publishedDate, shortDescription, content, category });
         }
       };
     
@@ -60,13 +66,21 @@ const PostForm = ({ action, actionText, ...props }) => {
             </div>
             <div style={{ width: '100%' }}>
                 <Form.Group className="mb-4">
-                <Form.Label>Short description</Form.Label>
-                <Form.Control 
-                    {...register("shortDescription", { required: true, minLength: 20 })}                    
-                    value={shortDescription} onChange={e => setShortDescription(e.target.value)}
-                    as="textarea" rows={3} placeholder="Leave a comment here"
-                />
-                {errors.shortDescription && <small className="d-block form-text text-danger mt-2">Your comment is too short (min is 20 characters)</small>}                                
+                    <Form.Label>Category</Form.Label> 
+                    <Form.Select value={category}  onChange={e => setCategory(e.target.value)}>
+                        <option>Select category...</option>
+                        {categories.map(cat =>
+                        <option key={cat.id}>{cat.name}</option> )}                       
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Short description</Form.Label>
+                    <Form.Control 
+                        {...register("shortDescription", { required: true, minLength: 20 })}                    
+                        value={shortDescription} onChange={e => setShortDescription(e.target.value)}
+                        as="textarea" rows={3} placeholder="Leave a comment here"
+                    />
+                    {errors.shortDescription && <small className="d-block form-text text-danger mt-2">Your comment is too short (min is 20 characters)</small>}                                
                 </Form.Group>
                 <Form.Group className="mb-4">
                     <Form.Label>Main content</Form.Label>

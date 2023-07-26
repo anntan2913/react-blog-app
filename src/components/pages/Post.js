@@ -4,12 +4,14 @@ import { Navigate, useParams, Link } from "react-router-dom";
 import { Card, Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import dateToStr from "../../utils/dateToStr";
+import { getCategoryById } from "../../redux/categoriesRedux";
 
 const Post = () => {
     
     const { id } = useParams();
 
-    const postData = useSelector(state => getPostById(state, id)); //Pobranie postu o id...
+    const postData = useSelector(state => getPostById(state, id)); 
+    //const category = useSelector(state => getCategoryById(state, postData.categoryId)).name;
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -40,6 +42,8 @@ const Post = () => {
                     <strong>Author: </strong>{postData.author}
                     <br/>
                     <strong>Published: </strong>{dateToStr(postData.publishedDate)}
+                    <br/>
+                    <strong>Category: </strong>{postData.category}
                     <br/>
                     <br/>
                     <p dangerouslySetInnerHTML={{ __html: postData.content }} />

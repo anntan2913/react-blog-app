@@ -1,6 +1,10 @@
+import shortid from "shortid";
 //selectors
-export const getAllPosts = ({ posts }) => posts;
-export const getPostById = ({ posts }, id) => posts.find(post => post.id === id);
+export const getAllPosts = ({ posts, categories  }) => posts.map(post => ({...post, category: categories.find(cat => cat.id === post.categoryId).name}));
+export const getPostById = ({ posts, categories }, id) => {
+  const post = posts.find(post => post.id === id); 
+  return { ...post, category: categories.find(cat => cat.id === post.categoryId).name }
+}
 
 // actions
 const createActionName = actionName => `app/posts/${actionName}`;
@@ -18,7 +22,7 @@ const postsReducer = (statePart = [], action) => {
     case REMOVE_POST:
       return statePart.filter(post => (post.id !== action.payload));
     case ADD_POST:
-      return [...statePart, {...action.payload}];
+      return [...statePart, {...action.payload, id: shortid()}];
     case EDIT_POST:
       return statePart.map(post => (post.id === action.payload.id ? { ...post, ...action.payload } : post));
     default:
@@ -38,3 +42,5 @@ export default postsReducer;
  ten pomysł wymaga, by w action.payload faktycznie właśc. id istniała i to nie losowanie id z shortid tylko id przyporządkowane do danego obiektu poddawanego modyfikacji! 
  (W <PostForm> info o id nie ma, tylko info z pól title, author itd.)
  */
+
+ 
