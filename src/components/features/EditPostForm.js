@@ -20,7 +20,7 @@ const EditPostForm = () => {
     else return(
         <PostForm action={handleEditPost} actionText='Edit post' 
             title={postData.title} author={postData.author} publishedDate={postData.publishedDate}
-            shortDescription={postData.shortDescription} content={postData.content} category={postData.category} />            
+            shortDescription={postData.shortDescription} content={postData.content} categoryId={postData.categoryId} />            
     );
 };
 

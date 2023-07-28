@@ -9,16 +9,16 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { getAllCategories } from '../../redux/categoriesRedux';
 
-const PostForm = ({ action, actionText, ...props }) => {
-
+const PostForm = ({ action, actionText, post,  ...props }) => {
+     
     const categories = useSelector(getAllCategories);
-    
+
     const [title, setTitle] = useState (props.title || '');
     const [author, setAuthor] = useState(props.author || '');
     const [publishedDate, setPublishedDate] = useState(props.publishedDate || '');
     const [shortDescription, setShortDescription] = useState(props.shortDescription || '');
     const [content, setContent] = useState(props.content || '');
-    const [category, setCategory] = useState(props.category || '');
+    const [categoryId, setCategoryId] = useState(props.post?.categoryId || '');
 
     const [contentError, setContentError] = useState(false); 
     const [dateError, setDateError] = useState(false);
@@ -30,8 +30,8 @@ const PostForm = ({ action, actionText, ...props }) => {
     const handleSubmit = () => {
         setContentError(!content)
         setDateError(!publishedDate)
-        if(content && publishedDate && category) {
-          action({ title, author, publishedDate, shortDescription, content, category });
+        if(content && publishedDate) {
+          action({ title, author, publishedDate, shortDescription, content, categoryId });
         }
       };
     
@@ -67,10 +67,10 @@ const PostForm = ({ action, actionText, ...props }) => {
             <div style={{ width: '100%' }}>
                 <Form.Group className="mb-4">
                     <Form.Label>Category</Form.Label> 
-                    <Form.Select value={category}  onChange={e => setCategory(e.target.value)}>
+                    <Form.Select value={categoryId}  onChange={e => setCategoryId(e.target.value)}>
                         <option>Select category...</option>
                         {categories.map(cat =>
-                        <option key={cat.id}>{cat.name}</option> )}                       
+                        <option key={cat.id} value={cat.id}>{cat.name}</option> )}                       
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-4">
