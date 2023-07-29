@@ -8,7 +8,8 @@ import NoMatch from "./components/pages/NoMatch";
 import Header from "./components/views/Header/Header";
 import Footer from './components/views/Footer/Footer';
 import { Container } from 'react-bootstrap';
-
+import Categories from './components/pages/Categories';
+import Category from './components/features/Category';
 
 const App = () => {
   
@@ -19,8 +20,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/post/:id" element={<Post />} />
-          <Route path="/post/add" element={<AddPost/>}/>
-          <Route path="/post/edit/:id" element={<EditPost/>}/>
+          <Route path="/post/add" element={<AddPost />} />
+          <Route path="/post/edit/:id" element={<EditPost />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/category/:categoryName" element={<Category />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>

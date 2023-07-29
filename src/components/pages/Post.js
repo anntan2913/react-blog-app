@@ -11,8 +11,7 @@ const Post = () => {
     const { id } = useParams();
 
     const postData = useSelector(state => getPostById(state, id)); 
-    //const category = useSelector(state => getCategoryById(state, postData.categoryId)).name;
-
+  
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

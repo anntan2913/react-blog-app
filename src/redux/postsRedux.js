@@ -1,10 +1,13 @@
 import shortid from "shortid";
+
 //selectors
 export const getAllPosts = ({ posts, categories  }) => posts.map(post => ({...post, category: categories.find(cat => cat.id === post.categoryId).name}));
 export const getPostById = ({ posts, categories }, id) => {
   const post = posts.find(post => post.id === id); 
   return { ...post, category: categories.find(cat => cat.id === post.categoryId).name }
-}
+};
+export const getPostsFilteredByCat = ({posts}, categoryId ) => posts.filter(post => post.categoryId === categoryId);
+
 
 // actions
 const createActionName = actionName => `app/posts/${actionName}`;
