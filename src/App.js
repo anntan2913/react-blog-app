@@ -1,15 +1,15 @@
+import { Container } from 'react-bootstrap';
 import { Routes, Route } from 'react-router-dom';
+import Header from './components/views/Header/Header';
+import Footer from './components/views/Footer/Footer';
 import Home from './components/pages/Home';
 import Post from './components/pages/Post';
 import AddPost from "./components/pages/AddPost";
 import EditPost from "./components/pages/EditPost";
 import About from "./components/pages/About";
 import NoMatch from "./components/pages/NoMatch";
-import Header from "./components/views/Header/Header";
-import Footer from './components/views/Footer/Footer';
-import { Container } from 'react-bootstrap';
 import Categories from './components/pages/Categories';
-import Category from './components/features/Category';
+import Category from './components/pages/Category';
 
 const App = () => {
   
