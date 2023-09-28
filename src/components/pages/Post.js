@@ -4,7 +4,7 @@ import { Navigate, useParams, Link } from "react-router-dom";
 import { Card, Button, Modal } from "react-bootstrap";
 import { useState } from "react";
 import dateToStr from "../../utils/dateToStr";
-import { getCategoryById } from "../../redux/categoriesRedux";
+//import { getCategoryById } from "../../redux/categoriesRedux";
 
 const Post = () => {
     

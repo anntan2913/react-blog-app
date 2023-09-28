@@ -14,7 +14,7 @@ const Categories = () => {
         <ListGroup style={{ width: '42rem', border: 'none' }}>
             {categories.map(cat =>(
                 <ListGroupItem key={cat.id}>
-                    <Link key={cat.id} to={`/category/${cat.name}`}>{cat.name}</Link>
+                    <Link key={cat.id} to={`/category/${cat.id}`}>{cat.name}</Link>
                 </ListGroupItem>
                 ))
             }

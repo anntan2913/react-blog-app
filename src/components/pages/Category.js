@@ -1,26 +1,30 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getAllCategoriesWithPosts } from '../../redux/categoriesRedux';
+import { getCategoryByIdWithPosts } from '../../redux/categoriesRedux';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import dateToStr from '../../utils/dateToStr';
 import { Link } from 'react-router-dom';
 
 const Category = () => {
     
-    const { categoryName } = useParams();
+    const { id } = useParams();
     /*
     const categoriesWithPosts = useSelector(state => getAllCategoriesWithPosts({ categories: state.categories,
                                                                                  posts: state.posts  }));             // przekaz. refer 
-    a po destrukturyzacji:
-    */
+    1. a po destrukturyzacji:    
     const categoriesWithPosts = useSelector(({ categories, posts }) => getAllCategoriesWithPosts({ categories, posts })); 
-    
+        
+    2. korekta: po zmianach w categoriesRedux (nowy selektor getCategoriesByIdWithPosts) jest niepotrzebne;
+    korekta const categoryData:    
     const categoryData = categoriesWithPosts.find(category => category.name === categoryName);
+    */
+
+    const categoryData = useSelector((state) => getCategoryByIdWithPosts(state, id));
 
     if (!categoryData) return <Navigate to='/categories'/>;
     else return (
         <section>
-        <h2>{categoryName}</h2>
+        <h2>{categoryData.name}</h2>
             <Row>
                 {categoryData.posts.map(post => (
                     <Col key={post.id} className="d-flex" sm="12" md="4" lg="4">
@@ -35,7 +39,7 @@ const Category = () => {
                                     {dateToStr(post.publishedDate)}
                                     <br />
                                     <strong>Category: </strong>
-                                    {categoryName}
+                                    {categoryData.name}
                                     <br />
                                     <br />
                                     {post.shortDescription}

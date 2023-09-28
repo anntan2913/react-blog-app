@@ -23,7 +23,7 @@ const App = () => {
           <Route path="/post/add" element={<AddPost />} />
           <Route path="/post/edit/:id" element={<EditPost />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/category/:categoryName" element={<Category />} />
+          <Route path="/category/:id" element={<Category />} /> 
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
@@ -34,3 +34,5 @@ const App = () => {
 };
 
 export default App;
+
+// line 26: zmiana nazwy param. na id z name
